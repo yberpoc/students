@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="ru">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport"
+ content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+ <meta http-equiv="X-UA-Compatible" content="ie=edge">
+ <title><?php echo $this->yieldContent('title'); ?></title>
+ <link rel="stylesheet" href="../resources/css/auth.css">
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+ <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+ <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="wrapper">
+ <div class="wrapper__title">
+ <h1>Авторизация</h1>
+ </div>
+ <form class="wrapper__form" action="index.php?method=auth" method="post">
+ <input class="wrapper__input" type="text" name="ALogin" placeholder="Логин">
+ <input class="wrapper__input" type="password" name="APassword" placeholder="Пароль">
+ <input class="wrapper__button" type="submit" name="login">
+ <p class="message"> <?php echo $this->yieldContent('message'); ?>  </p>
+ </form>
+</div>
+</body>
+</html>

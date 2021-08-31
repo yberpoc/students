@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="ru">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=1200, initial-scale=1.0">
+ <meta http-equiv="X-UA-Compatible" content="ie=edge">
+ <link rel="stylesheet" href="../resources/css/page.css">
+ <link rel="stylesheet" href="../resources/css/style.css">
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+ <link rel="preconnect" href="https://fonts.gstatic.com">
+ <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+ <title><?php echo $this->yieldContent('title'); ?></title>
+</head>
+<body>
+<section class="section">
+ <div class="section__wrapper">
+ <div class="section__container">
+ <div class="section__form-wrapper">
+ <form class="section__form form" id="create-student" action="index.php?method=addStudent" method="post">
+ <div class="form__wrapper">
+ <h2 class="form_title">Форма добавления ученика</h2>
+ <input class="form__input" type="text" name="SLastName" required="required" placeholder="Фамилия">
+ <input class="form__input" type="text" name="SFirstName" required="required" placeholder="Имя">
+ <input class="form__input" type="text" name="SMidName" required="required" placeholder="Отчество">
+ <input class="form__input" type="text" name="SBirthDate" required="required" placeholder="Дата рождения (yyyy-mm-dd)">
+ <div class="form__select-block select">
+ <h4 class="select__title">Выберете класс:</h4>
+ <select class="select__form-select" name="CId">
+ <?php $__currentLoopData = $resultAllClasses; $this->addLoop($__currentLoopData);$this->getFirstLoop();
+ foreach($__currentLoopData as $class): $loop = $this->incrementLoopIndices();  ?>
+ <option> <?php echo \htmlentities($class[0], ENT_QUOTES, 'UTF-8', false); ?></option>
+ <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
+ </select>
+ </div>
+ <button class="form__btn" type="submit">Добавить</button>
+ </div>
+ </form>
+ <a class="section__btn-logout" href="?method=logout">Выход</a>
+ </div>
+ <div class="section__info-block-students">
+ <div class="section__table">
+ <div class="section__table-block">
+ <?php $__currentLoopData = $queryAllStudents; $this->addLoop($__currentLoopData);$this->getFirstLoop();
+ foreach($__currentLoopData as $class => $students): $loop = $this->incrementLoopIndices();  ?>
+ <div class="section__main-block">
+ <div class="section__class-title">
+ <p>Класс: <?php echo \htmlentities($class, ENT_QUOTES, 'UTF-8', false); ?> </p>
+ <button class="section__class-title_btn">
+ <img class="right-arrow" src="../resources/img/right-arrow.png" alt="right-arrow">
+ </button>
+ </div>
+ <table class="section__table-content">
+ <tr>
+ <th>Фамилия</th>
+ <th>Имя</th>
+ <th>Отчество</th>
+ <th>Дата рождения</th>
+ <th>Класс</th>
+ <th>Удалить</th>
+ </tr>
+ <?php $__currentLoopData = $students; $this->addLoop($__currentLoopData);$this->getFirstLoop();
+ foreach($__currentLoopData as $attribute => $student): $loop = $this->incrementLoopIndices();  ?>
+ <?$_POST['SId'] = $student['SId']?>
+ <tr>
+ <td> <?php echo \htmlentities($student['SLastName'], ENT_QUOTES, 'UTF-8', false); ?></td>
+ <td> <?php echo \htmlentities($student['SFirstName'], ENT_QUOTES, 'UTF-8', false); ?></td>
+ <td> <?php echo \htmlentities($student['SMidName'], ENT_QUOTES, 'UTF-8', false); ?></td>
+ <td> <?php echo \htmlentities($student['SBirthDate'], ENT_QUOTES, 'UTF-8', false); ?></td>
+ <td> <?php echo \htmlentities($student['CClass'], ENT_QUOTES, 'UTF-8', false); ?></td>
+ <td><a class="delete-btn" onclick="return confirm('Вы уверены, что хотите удалить запись?')" href="index.php?method=delete&SId=<? echo $_POST['SId'] ?>">
+ <img class="delete-img" src="../resources/img/delete.png" alt="delete">
+ </a></td>
+ </tr>
+ <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
+ </table>
+ </div>
+ <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
+ </div>
+ </div>
+ <div class="section__table query">
+ <div class="section__table-block query__block">
+ <h3 class="query__block-title">Самый младший ученик среди всех классов:</h3>
+ <?php $__currentLoopData = $queryByMinBirthDate; $this->addLoop($__currentLoopData);$this->getFirstLoop();
+ foreach($__currentLoopData as $class => $student): $loop = $this->incrementLoopIndices();  ?>
+ <?php $__currentLoopData = $student; $this->addLoop($__currentLoopData);$this->getFirstLoop();
+ foreach($__currentLoopData as $attribute => $item): $loop = $this->incrementLoopIndices();  ?>
+ <table>
+ <tr>
+ <th>Фамилия</th>
+ <th>Имя</th>
+ <th>Отчество</th>
+ <th>Дата рождения</th>
+ <th>Класс</th>
+ </tr>
+ <tr>
+ <td><?php echo \htmlentities($item['SLastName'], ENT_QUOTES, 'UTF-8', false); ?></td>
+ <td><?php echo \htmlentities($item['SFirstName'], ENT_QUOTES, 'UTF-8', false); ?></td>
+ <td><?php echo \htmlentities($item['SMidName'], ENT_QUOTES, 'UTF-8', false); ?></td>
+ <td><?php echo \htmlentities($item['SBirthDate'], ENT_QUOTES, 'UTF-8', false); ?></td>
+ <td><?php echo \htmlentities($item['CClass'], ENT_QUOTES, 'UTF-8', false); ?></td>
+ </tr>
+ </table>
+ <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
+ <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
+ </div>
+ </div>
+ <div class="section__table query">
+ <div class="section__table-block query__block">
+ <h3 class="query__block-title">Количество учеников в 10 В классе:</h3>
+ <p class="query__block-count"><?php echo \htmlentities(count($queryStudentsByClass), ENT_QUOTES, 'UTF-8', false); ?></p>
+ </div>
+ </div>
+ <div class="section__table query">
+ <div class="section__table-block query__block">
+ <h3 class="query__block-title">Ученики, родившиеся в июле:</h3>
+ <table>
+ <tr>
+ <th>Имя</th>
+ <th>Фамилия</th>
+ <th>Отчество</th>
+ <th>Дата рождения</th>
+ </tr>
+ <?php $__currentLoopData = $queryStudentsByMonth; $this->addLoop($__currentLoopData);$this->getFirstLoop();
+ foreach($__currentLoopData as $studentMonth): $loop = $this->incrementLoopIndices();  ?>
+ <tr>
+ <td><?php echo \htmlentities($studentMonth[1], ENT_QUOTES, 'UTF-8', false); ?></td>
+ <td><?php echo \htmlentities($studentMonth[2], ENT_QUOTES, 'UTF-8', false); ?></td>
+ <td><?php echo \htmlentities($studentMonth[3], ENT_QUOTES, 'UTF-8', false); ?></td>
+ <td><?php echo \htmlentities($studentMonth[4], ENT_QUOTES, 'UTF-8', false); ?></td>
+ </tr>
+ <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
+ </table>
+ </div>
+ </div>
+ </div>
+ </div>
+ </div>
+</section>
+
+<script src="../resources/js/jquery-3.6.0.min.js"></script>
+<script src="../resources/js/js.js?"></script>
+
+</body>
+</html>
