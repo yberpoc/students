@@ -1,5 +1,4 @@
 <?php
-//S1b2X9r9
 
 class Database {
     private $host;
