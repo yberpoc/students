@@ -32,9 +32,6 @@ class Database {
             return $this->query;
         }
     }
-    public function getId() {
-       return mysqli_insert_id($this->connect);
-    }
 }
 
 $db = new Database('localhost', '*******', '*******', '*******');
