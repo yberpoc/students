@@ -37,7 +37,7 @@ class Database {
     }
 }
 
-$db = new Database('localhost', 'test11amadopro', 'yberpoc', 'RG543fdsg');
+$db = new Database('localhost', '*******', '*******', '*******');
 
 
 
